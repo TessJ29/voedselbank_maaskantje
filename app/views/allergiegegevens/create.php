@@ -13,7 +13,7 @@
 
             <tr>
                 <td>
-                    <label for="comment">comment</label>
+                    <label for="comment">Opmerking</label>
                     <input type="text" id="comment" name="comment">
                 </td>
             </tr>

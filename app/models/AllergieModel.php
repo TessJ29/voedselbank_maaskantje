@@ -18,7 +18,7 @@ class AllergieModel
         $sql = "SELECT Klant.gezinsnaam, 
                    Product.productnaam, 
                    Allergie.allergienaam, 
-                   Klant.comment,
+                   Allergie.comment,
                    Allergie.id
             FROM Klant
             JOIN Product ON Klant.allergieid = Product.allergieid
@@ -29,8 +29,6 @@ class AllergieModel
         return $result;
     }
 
-
-
     // Verwijdert een communicatierecord met de opgegeven id
     public function deleteAllergie($id)
     {
@@ -39,14 +37,14 @@ class AllergieModel
         return $this->db->execute();
     }
 
-
     // maakt een nieuw contactrecord aan
     public function createAllergie($post): void
     {
-        $this->db->query("INSERT INTO Allergie(allergienaam,  comment, createdAt, updatedAt)
-                          VALUES(:allergienaam,  :comment, :createdAt, :updatedAt)");
+        $this->db->query("INSERT INTO Allergie(allergienaam, isActive, comment, createdAt, updatedAt)
+                          VALUES(:allergienaam, :isActive, :comment, :createdAt, :updatedAt)");
 
         $this->db->bind(':allergienaam', $post["allergienaam"], PDO::PARAM_STR);
+        $this->db->bind(':isActive', 1, PDO::PARAM_BOOL);
         $this->db->bind(':comment', $post["comment"], PDO::PARAM_STR);
         $this->db->bind(':createdAt', DateTimeHelper::ConvertDateTimeToString(), PDO::PARAM_STR);
         $this->db->bind(':updatedAt', DateTimeHelper::ConvertDateTimeToString(), PDO::PARAM_STR);
@@ -54,26 +52,29 @@ class AllergieModel
         $this->db->execute();
     }
 
+
+
+
     //Werkt het opgegeven contactrecord bij op basis van de opgegeven informatie
     public function updateAllergie($post)
     {
         try {
-            $this->db->dbHandler()->beginTransaction();
-            var_dump($post);
-            exit();
+            // $this->db->dbHandler()->beginTransaction();
+            // var_dump($post);
+            // exit();
 
             $this->db->query("UPDATE Allergie 
                       SET allergienaam = :allergienaam,
                       comment = :comment,
                       WHERE Id = :id");
 
-            $this->db->bind(':id', $post["Id"], PDO::PARAM_INT);
+            $this->db->bind(':id', $post["id"], PDO::PARAM_INT);
             $this->db->bind(':allergienaam', $post["allergienaam"], PDO::PARAM_STR);
             $this->db->bind(':comment', $post["comment"], PDO::PARAM_STR);
 
             $result = $this->db->execute();
 
-            //$this->db->dbHandler()->commit();
+            $this->db->dbHandler()->commit();
 
             return $result;
         } catch (PDOException $e) {
