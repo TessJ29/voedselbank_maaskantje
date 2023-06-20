@@ -40,7 +40,7 @@ class AllergieModel
 
 
 
-  
+
 
     // maakt een nieuw contactrecord aan
     public function createAllergie($post): void
@@ -124,33 +124,14 @@ class AllergieModel
 
     public function ReserveringUpdate($post)
     {
-        $pakketOptieNaam = $post['allergienaam'];
-        $ReserveringId   = $post['id'];
+        $allergieNaam = $post['allergienaam'];
+        $allergieId = $post['id'];
 
-        $pakketOptieId = $this->GetPakketOptieId($pakketOptieNaam);
-
-        // var_dump($pakketOptieId);
-        // exit();
-
-        // var_dump($pakketOptieId);
-        // var_dump($ReserveringId);
-        // exit();
-        $sql = ("UPDATE 	Allergie
-                  SET 		PakketOptieId = :rra
-                  WHERE	    id = :id");
-
-        //$sql = ("UPDATE 	Reservering
-        //SET 		PakketOptieId = 3
-        //WHERE	    Id = 18");
-
-        $this->db->query($sql);
-        // $this->db->bind(':test', $pakketOptieId,  PDO::PARAM_INT);
-        $this->db->bind(':id', $ReserveringId, PDO::PARAM_INT);
-        $this->db->bind(':rra', $pakketOptieId->id, PDO::PARAM_INT);
+        $this->db->query("UPDATE Allergie SET allergienaam = :allergienaam WHERE id = :id");
+        $this->db->bind(':allergienaam', $allergieNaam, PDO::PARAM_STR);
+        $this->db->bind(':id', $allergieId, PDO::PARAM_INT);
         return $this->db->execute();
     }
-
-    
 }
 
 
