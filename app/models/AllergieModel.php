@@ -18,7 +18,8 @@ class AllergieModel
         $sql = "SELECT Klant.gezinsnaam, 
                    Product.productnaam, 
                    Allergie.allergienaam, 
-                   Klant.comment
+                   Klant.comment,
+                   Allergie.id
             FROM Klant
             JOIN Product ON Klant.allergieid = Product.allergieid
             JOIN Allergie ON Klant.allergieid = Allergie.id";
@@ -39,9 +40,6 @@ class AllergieModel
     }
 
 
-
-
-
     // maakt een nieuw contactrecord aan
     public function createAllergie($post): void
     {
@@ -56,23 +54,14 @@ class AllergieModel
         $this->db->execute();
     }
 
-
-
-
-
-
     //Werkt het opgegeven contactrecord bij op basis van de opgegeven informatie
     public function updateAllergie($post)
     {
         try {
-            //$this->db->dbHandler()->beginTransaction();
-            // var_dump($post);
-            // exit();
-
             $this->db->query("UPDATE Allergie 
-                          SET allergienaam = :allergienaam,
-                              comment = :comment
-                          WHERE id = :id");
+                      SET allergienaam = :allergienaam,
+                          comment = :comment
+                      WHERE id = :id");
 
             $this->db->bind(':id', $post["id"], PDO::PARAM_INT);
             $this->db->bind(':allergienaam', $post["allergienaam"], PDO::PARAM_STR);
@@ -80,12 +69,9 @@ class AllergieModel
 
             $result = $this->db->execute();
 
-            //$this->db->dbHandler()->commit();
-
             return $result;
         } catch (PDOException $e) {
             echo $e->getMessage() . " Rollback";
-            //$this->db->dbHandler()->rollBack();
             return false;
         }
     }
@@ -94,13 +80,13 @@ class AllergieModel
     public function getUpdate($id)
     {
         $this->db->query("  SELECT       Klant.gezinsnaam, 
-                                    Product.productnaam, 
-                                    Allergie.allergienaam,
-                                    Allergie.id,
-                                    Klant.comment
-                        FROM Klant
-                        JOIN Product ON Klant.allergieid = Product.allergieid
-                        JOIN Allergie ON Klant.allergieid = Allergie.id;");
+                                Product.productnaam, 
+                                Allergie.allergienaam,
+                                Allergie.id,
+                                Klant.comment
+                    FROM Klant
+                    JOIN Product ON Klant.allergieid = Product.allergieid
+                    JOIN Allergie ON Klant.allergieid = Allergie.id;");
         $this->db->bind(':id', $id, PDO::PARAM_INT);
         return $this->db->single();
 
