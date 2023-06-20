@@ -7,17 +7,16 @@
             <tr>
                 <td>
                     <label for="allergienaam">Allergie naam</label>
-                    <input type="text" id="allergienaam" name="allergienaam" >
+                    <input type="text" id="allergienaam" name="allergienaam">
                 </td>
             </tr>
 
             <tr>
                 <td>
                     <label for="comment">comment</label>
-                    <input type="text" id="comment" name="comment" >
+                    <input type="text" id="comment" name="comment">
                 </td>
             </tr>
-
 
             <tr>
                 <td>
