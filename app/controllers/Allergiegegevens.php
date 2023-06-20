@@ -23,8 +23,8 @@ class Allergiegegevens extends Controller
                   <td>$value->productnaam</td>
                   <td>$value->allergienaam</td>
                   <td>$value->comment</td>
-                  <td><a href='" . URLROOT . "/allergiegegevens/update/$value->id'><img src='\img\kale.png' alt='klaem'></a></td>
-                  <td><a href='" . URLROOT . "/allergiegegevens/delete/$value->id'><img src='\img\si.png' alt='dele'></a></td>
+                  <td><a href='" . URLROOT . "/allergiegegevens/update/$value->Id'><img src='\img\kale.png' alt='klaem'></a></td>
+                  <td><a href='" . URLROOT . "/allergiegegevens/delete/$value->Id'><img src='\img\si.png' alt='dele'></a></td>
 
                  </tr>";
         }
@@ -87,9 +87,7 @@ class Allergiegegevens extends Controller
                    <td>$value->gezinsnaam</td>
                   </tr>";
             }
-
             $data = [
-
                 'title' => '<h1>Update allergiegegevens</h1>',
                 'row' => $row,
                 'isim' => $value->gezinsnaam

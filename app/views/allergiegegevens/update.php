@@ -2,6 +2,8 @@
 
 <!-- < ?php var_dump($data["row"]); ?> -->
 
+<h5>gezinsnaam: <?= $data['isim']; ?></h5><br>
+
 <form action="<?= URLROOT; ?>/allergiegegevens/update" method="post">
     <table>
         <tbody>
@@ -17,7 +19,7 @@
             </tr>
             </tr>
 
-            <input type="hidden" name="id" value="<?= $data["row"]->id ?>">
+            <input type="hidden" name="Id" value="<?= $data["row"]->Id ?>">
 
             <td>
                 <input type="submit" value="Bewerken">
