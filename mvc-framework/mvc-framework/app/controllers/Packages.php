@@ -2,13 +2,15 @@
 class Packages extends Controller
 {
   // Properties, field
-  private $packageModel;
+  public $packageModel;
 
   // Dit is de constructor
   public function __construct()
   {
     $this->packageModel = $this->model('Package');
   }
+
+
 
   public function index()
   {
@@ -57,6 +59,7 @@ class Packages extends Controller
 
   public function update($id)
   {
+    $vooraadlimiet = 0;
     $packages = $this->packageModel->getPackageContent($id);
 
 
@@ -66,13 +69,13 @@ class Packages extends Controller
                   <td>$value->productnaam</td>
                   <td>$value->aantal</td>";
 
-      if ($value->vooraad != 0) {
+      if ($value->vooraad != $vooraadlimiet) {
         $rows .= "<td><a href='" . URLROOT . "/packages/increase/$value->packageid/$value->productid'>+</a></td>";
       } else {
         $rows .= "<td>+</td>";
       }
 
-      if ($value->aantal != 0) {
+      if ($value->aantal != $vooraadlimiet) {
         $rows .= "<td><a href='" . URLROOT . "/packages/decrease/$value->packageid/$value->productid'>-</a></td>";
       } else {
         $rows .= "<td>-</td>";
