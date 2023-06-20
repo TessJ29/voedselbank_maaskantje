@@ -21,23 +21,35 @@ class Packages extends Controller
     /**
      * Maak de inhoud voor de tbody in de view
      */
+    $error = '';
     $rows = '';
-    foreach ($packages as $value) {
-      $rows .= "<tr>
-                  <td>$value->pakketid</td>
-                  <td>$value->uitgiftedatum</td>
-                  <td>$value->gezinsnaam</td>
-                  <td>$value->totaal</td>
-                  
-                  <td><a href='" . URLROOT . "/packages/update/$value->pakketid'>✎</a></td>
-                  <td><a href='" . URLROOT . "/packages/delete/$value->pakketid'>🗑</a></td>
-                </tr>";
+    if (isset($packages[0])) {
+      foreach ($packages as $value) {
+        $rows .= "<tr>
+                      <td>$value->pakketid</td>
+                      <td>$value->uitgiftedatum</td>
+                      <td>$value->gezinsnaam</td>
+                      <td>$value->totaal</td>
+                      
+                      <td><a href='" . URLROOT . "/packages/update/$value->pakketid'>✎</a></td>";
+
+        if ($value->totaal == 0) {
+          $rows .= "<td><a href='" . URLROOT . "/packages/delete/$value->pakketid'>🗑</a></td>";
+        } else {
+          $rows .= "<td>🗑</td>";
+        }
+
+        $rows .= "</tr>";
+      }
+    } else {
+      $error = "er zijn momenteel geen pakketen";
     }
 
 
     $data = [
       'title' => '<h1>Overzicht pakketen</h1>',
-      'packages' => $rows
+      'packages' => $rows,
+      'error' => $error
     ];
     $this->view('packages/index', $data);
   }
@@ -46,16 +58,30 @@ class Packages extends Controller
   {
     $packages = $this->packageModel->getPackageContent($id);
 
+
     $rows = '';
     foreach ($packages as $value) {
       $rows .= "<tr>
                   <td>$value->productnaam</td>
-                  <td>$value->aantal</td>
+                  <td>$value->aantal</td>";
 
-                  <td><a href='" . URLROOT . "/packages/increase/$value->packageid/$value->productid'>+</a></td>
-                  <td><a href='" . URLROOT . "/packages/decrease/$value->packageid/$value->productid'>-</a></td>
+      if ($value->vooraad != 0) {
+        $rows .= "<td><a href='" . URLROOT . "/packages/increase/$value->packageid/$value->productid'>+</a></td>";
+      } else {
+        $rows .= "<td>+</td>";
+      }
+
+      if ($value->aantal != 0) {
+        $rows .= "<td><a href='" . URLROOT . "/packages/decrease/$value->packageid/$value->productid'>-</a></td>";
+      } else {
+        $rows .= "<td>-</td>";
+      }
+
+      $rows .= "<td>$value->vooraad</td>
                 </tr>";
     }
+
+
 
 
     $data = [

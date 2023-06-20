@@ -2,6 +2,11 @@
 echo $data["title"];
 ?>
 <a href="<?= URLROOT; ?>/packages/create">create</a>
+<br>
+<?php if ($data["error"] != '')
+  echo $data["error"];
+else {
+  echo "
 <table>
   <thead>
     <th>Pakket id</th>
@@ -12,7 +17,10 @@ echo $data["title"];
     <th>Verwijder</th>
   </thead>
   <tbody>
-    <?= $data['packages'] ?>
+    " . $data['packages'] . "
   </tbody>
 </table>
+";
+} ?>
+<br>
 <a href="<?= URLROOT; ?>/homepages/index">terug</a>

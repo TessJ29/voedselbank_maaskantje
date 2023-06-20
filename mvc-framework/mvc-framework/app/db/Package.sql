@@ -145,7 +145,7 @@ BEGIN
 
     START TRANSACTION;
         
-SELECT pakket.id as packageid, product.id as productid, product.productnaam, productperpakket.aantal FROM pakket
+SELECT pakket.id as packageid, product.id as productid, product.productnaam, productperpakket.aantal, product.vooraad FROM pakket
         INNER JOIN productperpakket 
         ON pakket.id = productperpakket.pakketid
         INNER JOIN product 

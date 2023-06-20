@@ -6,8 +6,9 @@ echo 'bewerkt familie ' . $data["id"];
   <thead>
     <th>Productnaam</th>
     <th>Aantal</th>
-    <th>+</th>
-    <th>-</th>
+    <th width="100px">+</th>
+    <th width="100px">-</th>
+    <th>vooraad</th>
   </thead>
   <tbody>
     <?= $data['packages'] ?>
