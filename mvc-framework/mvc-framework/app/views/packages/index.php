@@ -12,7 +12,7 @@ else {
     <th>Uitgifte datum</th>
     <th>Familie naam</th>
     <th>Aantal producten</th>
-    <th>Bewerk</th>
+    <th>Inventaris</th>
     <th>Verwijder</th>
   </thead>
   <tbody>
