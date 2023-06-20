@@ -6,45 +6,18 @@
 
             <tr>
                 <td>
-                    <label for="voornaam">Voornaam</label>
-                    <input type="text" id="voornaam" name="voornaam" >
+                    <label for="allergienaam">Allergie naam</label>
+                    <input type="text" id="allergienaam" name="allergienaam" >
                 </td>
             </tr>
 
             <tr>
                 <td>
-                    <label for="tussenvoegsel">Tussenvoegsel</label>
-                    <input type="text" id="tussenvoegsel" name="tussenvoegsel" >
+                    <label for="comment">comment</label>
+                    <input type="text" id="comment" name="comment" >
                 </td>
             </tr>
 
-            <tr>
-                <td>
-                    <label for="achternaam">Achternaam</label>
-                    <input type="text" id="achternaam" name="achternaam" >
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <label for="email">Email</label>
-                    <input type="text" name="email" id="email">
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <label for="mobile">Mobiel</label>
-                    <input type="number" name="mobile" id="mobile">
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <label for="opmerking">Opmerking</label>
-                    <input type="text" name="opmerking" id="opmerking">
-                </td>
-            </tr>
 
             <tr>
                 <td>
