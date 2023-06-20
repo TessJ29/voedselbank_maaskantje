@@ -17,7 +17,7 @@
             </tr>
             </tr>
 
-            <input type="hidden" name="Id" value="<?= $data["row"]->Id ?>">
+            <input type="hidden" name="id" value="<?= $data["row"]->id ?>">
 
             <td>
                 <input type="submit" value="Bewerken">

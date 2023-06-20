@@ -81,16 +81,18 @@ class Allergiegegevens extends Controller
             echo "test";
             $row = $this->allergieModel->getSingleAllergie($id);
             $rows = '';
-            $allergies = $this->allergieModel->getAllergiesWithVoornaam();
-            foreach ($allergies as $value) {
+            $contacts = $this->allergieModel->getAllergiesWithVoornaam();
+            foreach ($contacts as $value) {
                 $rows .= "<tr>
-              <td>$value->gezinsnaam</td>
-             </tr>";
+                   <td>$value->gezinsnaam</td>
+                  </tr>";
             }
+
             $data = [
+
                 'title' => '<h1>Update allergiegegevens</h1>',
                 'row' => $row,
-
+                'isim' => $value->gezinsnaam
             ];
             $this->view("allergiegegevens/update", $data);
         }

@@ -58,40 +58,49 @@ class AllergieModel
     public function updateAllergie($post)
     {
         try {
+            $this->db->dbHandler()->beginTransaction();
+            var_dump($post);
+            exit();
+
             $this->db->query("UPDATE Allergie 
                       SET allergienaam = :allergienaam,
-                          comment = :comment
-                      WHERE id = :id");
+                      comment = :comment,
+                      WHERE Id = :id");
 
-            $this->db->bind(':id', $post["id"], PDO::PARAM_INT);
+            $this->db->bind(':id', $post["Id"], PDO::PARAM_INT);
             $this->db->bind(':allergienaam', $post["allergienaam"], PDO::PARAM_STR);
             $this->db->bind(':comment', $post["comment"], PDO::PARAM_STR);
 
             $result = $this->db->execute();
 
+            //$this->db->dbHandler()->commit();
+
             return $result;
         } catch (PDOException $e) {
             echo $e->getMessage() . " Rollback";
+            //$this->db->dbHandler()->rollBack();
             return false;
         }
     }
 
-
-    public function getUpdate($id)
+    // haalt het id op
+    public function getSingleAllergie($id)
     {
-        $this->db->query("  SELECT       Klant.gezinsnaam, 
-                                Product.productnaam, 
-                                Allergie.allergienaam,
-                                Allergie.id,
-                                Klant.comment
-                    FROM Klant
-                    JOIN Product ON Klant.allergieid = Product.allergieid
-                    JOIN Allergie ON Klant.allergieid = Allergie.id;");
+        $this->db->query("SELECT allergienaam, comment, id
+                        FROM Allergie WHERE id = :id");
         $this->db->bind(':id', $id, PDO::PARAM_INT);
         return $this->db->single();
+    }
 
-        $result = $this->db->resultSet();
 
-        return $result;
+    // Voornaam contactrecords ophalen
+    public function getAllergiesWithVoornaam()
+    {
+        $this->db->query("
+          SELECT Klant.gezinsnaam
+          FROM Klant
+          JOIN Allergie ON Klant.allergieid = Allergie.id
+        ");
+        return $this->db->resultSet();
     }
 }
