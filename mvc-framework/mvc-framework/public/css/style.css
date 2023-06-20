@@ -1,0 +1,22 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#test {
+  display: none;
+}
+
+.errorForm {
+    color: red;
+    font-size: 0.7em;
+}
+
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.remark {
+    color: red;
+}
