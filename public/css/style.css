@@ -19,9 +19,11 @@ body {
 
 table,
 th,
+
 td,
 tr {
   border: 3px solid black;
+
   border-collapse: collapse;
   text-align: center;
 }
@@ -103,4 +105,3 @@ button {
 button:hover {
   background-color: #0077B6;
   color: #FFF;
-}
