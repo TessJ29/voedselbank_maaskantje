@@ -2,7 +2,7 @@
 
 <!-- < ?php var_dump($data["row"]); ?> -->
 
-<h5>gezinsnaam: <?= $data['isim']; ?></h5><br>
+<!-- <h5>gezinsnaam: < ?= $data['isim']; ?></h5><br> -->
 
 <form action="<?= URLROOT; ?>/allergiegegevens/update" method="post">
     <table>

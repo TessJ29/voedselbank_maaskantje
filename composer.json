@@ -1,6 +1,6 @@
 {
     "require-dev": {
-        "phpunit/phpunit": "dev-main"
+        "phpunit/phpunit": "^10.0"
     },
     "autoload" : {
         "classmap": [

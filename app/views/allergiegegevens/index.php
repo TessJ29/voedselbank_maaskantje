@@ -13,7 +13,7 @@
 
 <body>
     <!-- navbar -->
-    <nav>
+    <nav class="dark">
         <div class="logo">
             <img src="\img\png.png" alt="Logo">
         </div>
@@ -38,10 +38,9 @@
 
     <!-- create  -->
 
-    <a href="<?= URLROOT; ?>/allergiegegevens/create">Nieuw Allergiegegevens</a>
+    <a href="<?= URLROOT; ?>/allergiegegevens/create" class="button">Nieuw Allergiegegevens</a>
 
 
 </body>
-
 
 </html>

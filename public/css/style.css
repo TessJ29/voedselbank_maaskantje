@@ -1,16 +1,16 @@
 body {
-    font-family: Verdana;
+  font-family: Verdana;
 
 }
 
 .topicError {
-    font-size: 0.8em;
-    color: red;
+  font-size: 0.8em;
+  color: red;
 }
 
 .opmerkingError {
-    font-size: 0.8em;
-    color: red;
+  font-size: 0.8em;
+  color: red;
 }
 
 /* contactgegevens css */
@@ -20,79 +20,107 @@ body {
 table,
 th,
 td {
-    border: 2px solid black;
-    border-collapse: collapse;
-    text-align: center;
+  border: 2px solid black;
+  border-collapse: collapse;
+  text-align: center;
 }
 
 
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    flex-direction: row-reverse
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex-direction: row-reverse
 }
 
 .logo {
-    order: 2;
+  order: 2;
 }
 
 .logo img {
-    height: 50px;
+  height: 50px;
 }
 
 ul {
-    display: flex;
-    order: 1;
+  display: flex;
+  order: 1;
 }
 
 li {
-    margin-right: 40px;
+  margin-right: 40px;
 }
 
 a {
-    color: #333;
-    text-decoration: none;
-    font-weight: bold;
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 a:hover {
-    color: #f18122;
+  color: #f18122;
 }
 
 
 
 table {
-    margin: auto;
-    background-color: #e6d9f2;
-    font-family: 'Helvetica Neue', sans-serif;
-    font-size: 16px;
-  }
-  th, td {
-    padding: 10px;
-    text-align: center;
-  }
-  th {
-    background-color: #70c2ee;
-    color: #FFF;
-  }
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  tr:hover {
-    background-color: #A4C8DC;
-  }
-  button {
-    background-color: #FFF;
-    border: solid 1px #0077B6;
-    padding: 5px 10px;
-    color: #b0b600;
-    cursor: pointer;
-  }
-  button:hover {
-    background-color: #0077B6;
-    color: #FFF;
-  }
+  margin: auto;
+  background-color: #e6d9f2;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #70c2ee;
+  color: #FFF;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #A4C8DC;
+}
+
+button {
+  background-color: #FFF;
+  border: solid 1px #0077B6;
+  padding: 5px 10px;
+  color: #b0b600;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0077B6;
+  color: #FFF;
+}
+
+
+.dark {
+  background-color: #d2bdff;
+  color: #0f8af5;
+  padding-top: 10px;
+}
+
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.button:hover {
+  background-color: #70c2ee;
+}

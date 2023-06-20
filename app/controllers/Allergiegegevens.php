@@ -15,7 +15,8 @@ class Allergiegegevens extends Controller
     {
 
         $allergies = $this->allergieModel->getAllergie();
-        // var_dump($contacts);
+        var_dump($allergies);
+
         $rows = '';
         foreach ($allergies as $value) {
             $rows .= "<tr>
