@@ -1,0 +1,106 @@
+body {
+  font-family: Verdana;
+
+}
+
+.topicError {
+  font-size: 0.8em;
+  color: red;
+}
+
+.opmerkingError {
+  font-size: 0.8em;
+  color: red;
+}
+
+/* contactgegevens css */
+
+
+
+table,
+th,
+td,
+tr {
+  border: 3px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex-direction: row-reverse
+}
+
+.logo {
+  order: 2;
+}
+
+.logo img {
+  height: 50px;
+}
+
+ul {
+  display: flex;
+  order: 1;
+}
+
+li {
+  margin-right: 40px;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  color: #f18122;
+}
+
+
+
+table {
+  margin: auto;
+  background-color: #e6d9f2;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #70c2ee;
+  color: #FFF;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #A4C8DC;
+}
+
+button {
+  background-color: #FFF;
+  border: solid 1px #0077B6;
+  padding: 5px 10px;
+  color: #b0b600;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0077B6;
+  color: #FFF;
+}
