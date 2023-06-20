@@ -25,6 +25,7 @@ class Packages extends Controller
     foreach ($packages as $value) {
       $rows .= "<tr>
                   <td>$value->pakketid</td>
+                  <td>$value->uitgiftedatum</td>
                   <td>$value->gezinsnaam</td>
                   <td>$value->totaal</td>
                   
@@ -76,6 +77,7 @@ class Packages extends Controller
 
   public function addPackage()
   {
+    var_dump($_POST);
     $this->packageModel->addPackage($_POST['uitgifteDatum']);
     header('Location: ' . URLROOT . '/packages');
   }

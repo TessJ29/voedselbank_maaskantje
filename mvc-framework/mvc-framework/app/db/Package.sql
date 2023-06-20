@@ -15,15 +15,15 @@ BEGIN
     END;
 
     START TRANSACTION;
-        SELECT pakket.id as pakketid, klant.gezinsnaam, SUM(productperpakket.aantal) as totaal FROM pakket
-        INNER JOIN productperpakket 
+        SELECT pakket.id as pakketid, klant.gezinsnaam, pakket.uitgiftedatum, SUM(productperpakket.aantal) as totaal FROM pakket
+        LEFT OUTER JOIN productperpakket 
         ON pakket.id = productperpakket.pakketid
-        INNER JOIN product 
+        LEFT OUTER JOIN product 
         ON product.id = productperpakket.productid
         
-        INNER JOIN pakketperklant 
+        LEFT OUTER JOIN pakketperklant 
         ON pakketperklant.pakketid = pakket.id
-        INNER JOIN klant
+        LEFT OUTER JOIN klant
         ON pakketperklant.klantid = klant.id
         GROUP BY pakket.id;
     COMMIT;
@@ -116,7 +116,7 @@ BEGIN
     END;
 
     START TRANSACTION;
-         INSERT INTO pakket (uitgiftedarum, createdAt, updatedAt) VALUES (p_date, SYSDATE(6), SYSDATE(6));
+        INSERT INTO pakket (uitgiftedatum, createdAt, updatedAt) VALUES (p_date, SYSDATE(6), SYSDATE(6));
     COMMIT;
 END //
 DELIMITER ;
@@ -159,3 +159,62 @@ END //
 DELIMITER ;
 
 
+-- CreatePackage
+
+
+DROP PROCEDURE IF EXISTS spGetProductCount;
+
+DELIMITER //
+
+CREATE PROCEDURE spGetProductCount
+( -- Dit zijn alle argumenten die je meegeeft met het aanroepen van de procedure
+    
+) 
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN 
+        ROLLBACK;
+        SELECT 'An error has occurred, operation rollbacked and the stored procedure was terminated';
+    END;
+
+    START TRANSACTION;
+        
+SELECT COUNT(id) as count FROM product
+
+    COMMIT;
+END //
+DELIMITER ;
+
+
+     
+
+-- CreatePackage
+
+
+DROP PROCEDURE IF EXISTS spLinkProducts;
+
+DELIMITER //
+
+CREATE PROCEDURE spLinkProducts
+( -- Dit zijn alle argumenten die je meegeeft met het aanroepen van de procedure
+    p_productId int(6)
+) 
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN 
+        ROLLBACK;
+        SELECT 'An error has occurred, operation rollbacked and the stored procedure was terminated';
+    END;
+
+    START TRANSACTION;
+        
+    INSERT INTO productperpakket (pakketid, productid)
+                VALUES ((SELECT MAX(id) FROM pakket), p_productId);   
+
+
+    COMMIT;
+END //
+DELIMITER ;
+
+
+     

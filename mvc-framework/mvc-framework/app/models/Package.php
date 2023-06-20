@@ -30,13 +30,32 @@ class Package
     return $result;
   }
 
-  public function createPackage($date)
+  public function addPackage($date)
   {
+    echo "create";
     $this->db->query(
-      'CALL `spAddPackage`(:id);'
+      'CALL `spCreatePackage`(:date);'
     );
-    $this->db->bind(':id', $id, PDO::PARAM_INT);
+
+    $this->db->bind(':date', $date);
     $result = $this->db->resultSet();
+
+    echo "get";
+    $this->db->query(
+      'CALL `spGetProductCount`();'
+    );
+    $result = $this->db->resultSet();
+
+    for ($i = 1; $i < $result[0]->count; $i++) {
+      echo $i;
+      'CALL `spLinkProduct`(:i);';
+      $this->db->bind(':i', $i);
+      $result = $this->db->resultSet();
+    }
+
+
+
+
     return $result;
   }
 }

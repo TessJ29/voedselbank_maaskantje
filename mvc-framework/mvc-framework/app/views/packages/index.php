@@ -5,6 +5,7 @@ echo $data["title"];
 <table>
   <thead>
     <th>Pakket id</th>
+    <th>Uitgifte datum</th>
     <th>Familie naam</th>
     <th>Aantal producten</th>
     <th>Bewerk</th>
