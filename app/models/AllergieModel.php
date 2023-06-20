@@ -54,32 +54,32 @@ class AllergieModel
 
     //Werkt het opgegeven contactrecord bij op basis van de opgegeven informatie
     public function updateAllergie($post)
-    {
-        try {
-            $this->db->dbHandler()->beginTransaction();
-            var_dump($post);
-            exit();
+{
+    try {
+        // $this->db->dbHandler()->beginTransaction();
+        // var_dump($post);
+        // exit();
 
-            $this->db->query("UPDATE Allergie 
-                      SET allergienaam = :allergienaam,
-                      comment = :comment,
-                      WHERE Id = :id");
+        $this->db->query("UPDATE Allergie 
+                        SET allergienaam = :allergienaam,
+                            comment = :comment
+                        WHERE Id = :id");
 
-            $this->db->bind(':id', $post["Id"], PDO::PARAM_INT);
-            $this->db->bind(':allergienaam', $post["allergienaam"], PDO::PARAM_STR);
-            $this->db->bind(':comment', $post["comment"], PDO::PARAM_STR);
+        $this->db->bind(':id', $post["Id"], PDO::PARAM_INT);
+        $this->db->bind(':allergienaam', $post["allergienaam"], PDO::PARAM_STR);
+        $this->db->bind(':comment', $post["comment"], PDO::PARAM_STR);
 
-            $result = $this->db->execute();
+        $result = $this->db->execute();
 
-            // $this->db->dbHandler()->commit();
+        // $this->db->dbHandler()->commit();
 
-            return $result;
-        } catch (PDOException $e) {
-            echo $e->getMessage() . " Rollback";
-            //$this->db->dbHandler()->rollBack();
-            return false;
-        }
+        return $result;
+    } catch (PDOException $e) {
+        echo $e->getMessage() . " Rollback";
+        //$this->db->dbHandler()->rollBack();
+        return false;
     }
+}
 
     // haalt het id op
     public function getSingleAllergie($id)
@@ -102,3 +102,7 @@ class AllergieModel
         return $this->db->resultSet();
     }
 }
+
+
+
+
