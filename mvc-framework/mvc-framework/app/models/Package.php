@@ -36,26 +36,63 @@ class Package
     $this->db->query(
       'CALL `spCreatePackage`(:date);'
     );
-
-    $this->db->bind(':date', $date);
+    $this->db->bind(':date', $date, PDO::PARAM_STR);
     $result = $this->db->resultSet();
+    return $result;
+  }
 
-    echo "get";
+  public function deletePackage($id)
+  {
     $this->db->query(
-      'CALL `spGetProductCount`();'
+      'CALL `spDeletePackage`(:id);'
     );
+    $this->db->bind(':id', $id, PDO::PARAM_INT);
     $result = $this->db->resultSet();
+    header('Location: ' . URLROOT . '/packages');
+    return $result;
+  }
 
-    for ($i = 1; $i < $result[0]->count; $i++) {
-      echo $i;
-      'CALL `spLinkProduct`(:i);';
-      $this->db->bind(':i', $i);
-      $result = $this->db->resultSet();
-    }
+  public function viewAllProducts()
+  {
 
+    $this->db->query(
+      'CALL `spViewAllProducts`();'
+    );
 
+    $result = $this->db->resultSet();
+    return $result;
+  }
 
+  public function increase($packageId, $productId)
+  {
+    $this->db->query(
+      'CALL `spAddProductToPackage`(:packageId, :productId);'
+    );
+    $this->db->bind(':packageId', $packageId, PDO::PARAM_INT);
+    $this->db->bind(':productId', $productId, PDO::PARAM_INT);
+    $result = $this->db->resultSet();
+    return $result;
+  }
 
+  public function decrease($packageId, $productId)
+  {
+    $this->db->query(
+      'CALL `spRemoveProductFromPackage`(:packageId, :productId);'
+    );
+    $this->db->bind(':packageId', $packageId, PDO::PARAM_INT);
+    $this->db->bind(':productId', $productId, PDO::PARAM_INT);
+    $result = $this->db->resultSet();
+    return $result;
+  }
+
+  public function link()
+  {
+
+    $this->db->query(
+      'CALL `spLinkPackageProduct`();'
+    );
+
+    $result = $this->db->resultSet();
     return $result;
   }
 }

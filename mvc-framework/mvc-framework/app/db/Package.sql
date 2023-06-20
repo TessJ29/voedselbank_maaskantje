@@ -106,7 +106,7 @@ DELIMITER //
 
 CREATE PROCEDURE spCreatePackage
 ( -- Dit zijn alle argumenten die je meegeeft met het aanroepen van de procedure
-    p_date date
+    p_date varchar(10)
 ) 
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -120,6 +120,8 @@ BEGIN
     COMMIT;
 END //
 DELIMITER ;
+
+
 
 
 
@@ -143,30 +145,28 @@ BEGIN
 
     START TRANSACTION;
         
-SELECT pakket.id as pakketid, product.productnaam, productperpakket.aantal, klant.gezinsnaam FROM pakket
+SELECT pakket.id as packageid, product.id as productid, product.productnaam, productperpakket.aantal FROM pakket
         INNER JOIN productperpakket 
         ON pakket.id = productperpakket.pakketid
         INNER JOIN product 
         ON product.id = productperpakket.productid
-        
-        INNER JOIN pakketperklant 
-        ON pakketperklant.pakketid = pakket.id
-        INNER JOIN klant
-        ON pakketperklant.klantid = klant.id
         WHERE pakket.id = p_id;
+
     COMMIT;
 END //
 DELIMITER ;
 
 
+     
+
 -- CreatePackage
 
 
-DROP PROCEDURE IF EXISTS spGetProductCount;
+DROP PROCEDURE IF EXISTS spViewAllProducts;
 
 DELIMITER //
 
-CREATE PROCEDURE spGetProductCount
+CREATE PROCEDURE spViewAllProducts
 ( -- Dit zijn alle argumenten die je meegeeft met het aanroepen van de procedure
     
 ) 
@@ -179,25 +179,23 @@ BEGIN
 
     START TRANSACTION;
         
-SELECT COUNT(id) as count FROM product
-
+        SELECT product.productnaam, product.vooraad FROM product;
     COMMIT;
 END //
 DELIMITER ;
 
 
      
+-- Delete package
 
--- CreatePackage
 
-
-DROP PROCEDURE IF EXISTS spLinkProducts;
+DROP PROCEDURE IF EXISTS spDeletePackage;
 
 DELIMITER //
 
-CREATE PROCEDURE spLinkProducts
+CREATE PROCEDURE spDeletePackage
 ( -- Dit zijn alle argumenten die je meegeeft met het aanroepen van de procedure
-    p_productId int(6)
+    p_id int(6)
 ) 
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -208,13 +206,68 @@ BEGIN
 
     START TRANSACTION;
         
-    INSERT INTO productperpakket (pakketid, productid)
-                VALUES ((SELECT MAX(id) FROM pakket), p_productId);   
-
-
+DELETE FROM pakket WHERE id = p_id;
     COMMIT;
 END //
 DELIMITER ;
 
 
-     
+
+-- CreatePackage
+
+
+DROP PROCEDURE IF EXISTS spLinkPackageProduct;
+
+DELIMITER //
+
+CREATE PROCEDURE spLinkPackageProduct
+( -- Dit zijn alle argumenten die je meegeeft met het aanroepen van de procedure
+    
+) 
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN 
+        ROLLBACK;
+        SELECT 'An error has occurred, operation rollbacked and the stored procedure was terminated';
+    END;
+
+    START TRANSACTION;
+        INSERT INTO productperpakket (pakketid, productid, aantal) VALUES ((SELECT MAX(id) FROM pakket) ,1, 0);
+        INSERT INTO productperpakket (pakketid, productid, aantal) VALUES ((SELECT MAX(id) FROM pakket) ,2, 0);
+        INSERT INTO productperpakket (pakketid, productid, aantal) VALUES ((SELECT MAX(id) FROM pakket) ,3, 0);
+        INSERT INTO productperpakket (pakketid, productid, aantal) VALUES ((SELECT MAX(id) FROM pakket) ,4, 0);
+        INSERT INTO productperpakket (pakketid, productid, aantal) VALUES ((SELECT MAX(id) FROM pakket) ,5, 0);
+    COMMIT;
+END //
+DELIMITER ;
+
+
+
+DROP PROCEDURE IF EXISTS spViewPackageContentAndProducts;
+
+DELIMITER //
+
+CREATE PROCEDURE spViewPackageContentAndProducts
+( -- Dit zijn alle argumenten die je meegeeft met het aanroepen van de procedure
+    p_id int(6)
+) 
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN 
+        ROLLBACK;
+        SELECT 'An error has occurred, operation rollbacked and the stored procedure was terminated';
+    END;
+
+    START TRANSACTION;
+        
+        SELECT product.productnaam as pnaam, product.vooraad FROM product;
+
+        SELECT pakket.id as packageid, product.id as productid, product.productnaam, productperpakket.aantal FROM pakket
+        INNER JOIN productperpakket 
+        ON pakket.id = productperpakket.pakketid
+        INNER JOIN product 
+        ON product.id = productperpakket.productid
+        WHERE pakket.id = p_id;
+        COMMIT;
+END //
+DELIMITER ;

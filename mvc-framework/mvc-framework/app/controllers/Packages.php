@@ -29,8 +29,8 @@ class Packages extends Controller
                   <td>$value->gezinsnaam</td>
                   <td>$value->totaal</td>
                   
-                  <td><a href='" . URLROOT . "/packages/update/$value->pakketid'>update</a></td>
-                  <td><a href='" . URLROOT . "/packages/delete/$value->pakketid'>delete</a></td>
+                  <td><a href='" . URLROOT . "/packages/update/$value->pakketid'>✎</a></td>
+                  <td><a href='" . URLROOT . "/packages/delete/$value->pakketid'>🗑</a></td>
                 </tr>";
     }
 
@@ -51,18 +51,21 @@ class Packages extends Controller
       $rows .= "<tr>
                   <td>$value->productnaam</td>
                   <td>$value->aantal</td>
-                  
-                  <td><a href='" . URLROOT . "/packages/increase/$value->pakketid'>+</a></td>
-                  <td><a href='" . URLROOT . "/packages/decrease/$value->pakketid'>-</a></td>
+
+                  <td><a href='" . URLROOT . "/packages/increase/$value->packageid/$value->productid'>+</a></td>
+                  <td><a href='" . URLROOT . "/packages/decrease/$value->packageid/$value->productid'>-</a></td>
                 </tr>";
     }
 
 
     $data = [
-      'name' => $packages[0]->gezinsnaam,
+
       'title' => '<h1>bewerk pakket</h1>',
-      'packages' => $rows
+      'packages' => $rows,
+      'id' => $id
     ];
+
+
     $this->view('packages/update', $data);
   }
 
@@ -79,6 +82,29 @@ class Packages extends Controller
   {
     var_dump($_POST);
     $this->packageModel->addPackage($_POST['uitgifteDatum']);
+
+
+    $this->packageModel->link();
+
+
     header('Location: ' . URLROOT . '/packages');
+  }
+
+  public function delete($id)
+  {
+    $this->packageModel->deletePackage($id);
+  }
+
+  public function increase($packageId, $productId)
+  {
+    var_dump($_POST);
+    $this->packageModel->increase($packageId, $productId);
+    header('Location: ' . URLROOT . '/packages/update/' . $packageId);
+  }
+
+  public function decrease($packageId, $productId)
+  {
+    $this->packageModel->decrease($packageId, $productId);
+    header('Location: ' . URLROOT . '/packages/update/' . $packageId);
   }
 }

@@ -1,6 +1,6 @@
 <?php require APPROOT . '/views/includes/head.php';
 echo $data["title"];
-echo 'bewerkt familie ' . $data["name"];
+echo 'bewerkt familie ' . $data["id"];
 ?>
 <table>
   <thead>
@@ -13,4 +13,6 @@ echo 'bewerkt familie ' . $data["name"];
     <?= $data['packages'] ?>
   </tbody>
 </table>
-<a href="<?= URLROOT; ?>/homepages/index">terug</a>
+
+
+<a href="<?= URLROOT; ?>/packages">terug</a>
