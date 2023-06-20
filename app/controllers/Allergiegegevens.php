@@ -74,7 +74,7 @@ class Allergiegegevens extends Controller
     // De server filtert de gegevens en werkt het opgegeven contactrecord bij door een object van de klasse ContactModel te maken
     public function update($id = null)
     {
-        var_dump($id);
+        // var_dump($id);
         exit();
         // var_dump($_SERVER);exit();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
