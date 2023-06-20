@@ -37,6 +37,7 @@ class Packages extends Controller
           $rows .= "<td><a href='" . URLROOT . "/packages/delete/$value->pakketid'>🗑</a></td>";
         } else {
           $rows .= "<td>🗑</td>";
+          $error = 'gevulde pakketten kunnen niet verwijderd worden';
         }
 
         $rows .= "</tr>";
@@ -106,15 +107,18 @@ class Packages extends Controller
 
   public function addPackage()
   {
-    var_dump($_POST);
-    $this->packageModel->addPackage($_POST['uitgifteDatum']);
+    try {
 
-
-    $this->packageModel->link();
-
-
-    header('Location: ' . URLROOT . '/packages');
+      $this->packageModel->addPackage($_POST['uitgifteDatum']);
+      $this->packageModel->link();
+      header('Location: ' . URLROOT . '/packages');
+    } catch (Exception $e) {
+      // Handle the exception here
+      // You can log the error, display a custom error message, or take other actions
+      echo "<span style='color: red;'> Er is iets mis gegaan </span> <br> bericht: " . $e->getMessage();
+    }
   }
+
 
   public function delete($id)
   {

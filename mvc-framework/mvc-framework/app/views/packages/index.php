@@ -2,9 +2,8 @@
 echo $data["title"];
 ?>
 <a href="<?= URLROOT; ?>/packages/create">create</a>
-<br>
-<?php if ($data["error"] != '')
-  echo $data["error"];
+
+<?php if ($data["error"] == 'er zijn momenteel geen pakketen');
 else {
   echo "
 <table>
@@ -22,5 +21,7 @@ else {
 </table>
 ";
 } ?>
+<br>
+<?php echo $data["error"]; ?>
 <br>
 <a href="<?= URLROOT; ?>/homepages/index">terug</a>

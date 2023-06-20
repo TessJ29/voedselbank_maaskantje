@@ -32,13 +32,14 @@ class Package
 
   public function addPackage($date)
   {
-    echo "create";
-    $this->db->query(
-      'CALL `spCreatePackage`(:date);'
-    );
-    $this->db->bind(':date', $date, PDO::PARAM_STR);
-    $result = $this->db->resultSet();
-    return $result;
+    try {
+      $this->db->query('CALL `spCreatePackage`(:date);');
+      $this->db->bind(':date', $date, PDO::PARAM_STR);
+      $result = $this->db->resultSet();
+      return $result;
+    } catch (PDOException $e) {
+      echo "An error occurred: " . $e->getMessage();
+    }
   }
 
   public function deletePackage($id)
