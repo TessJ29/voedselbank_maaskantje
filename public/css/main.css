@@ -107,3 +107,13 @@ a:active {
   justify-content:center;
   align-items: center;
 }
+
+.input, .buttons {
+  width: 20%;
+  margin: .5rem auto;
+  display: flex;
+  justify-content: space-between;
+}
+label {
+  font-size: 16px;
+}
