@@ -1,8 +1,11 @@
+<?php require(APPROOT . '/views/includes/header.php'); ?>
+
 <h3><?= $data['title']; ?></h3>
-
-<h2 style="text-align: center;"><a href="<?= URLROOT . '/allergiegegevens/index'; ?>">Allergiegegevens</a></h2> <br>
-
+<h2 style="text-align: center;"><a href="<?= URLROOT . '/klant/index'; ?>">Klanten</a></h2> <br>
 
 
 
-<h4 style="text-align: center;"><?= $data['sumtext']; ?></h4>
+
+
+<?php require(APPROOT . '/views/includes/footer.php'); ?>
+

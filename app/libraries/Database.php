@@ -11,6 +11,7 @@ class Database
     private $dbPass = DB_PASS;
     private $dbName = DB_NAME;
     private $dbHandler;
+    private $statement;
 
     public function __construct()
     {
@@ -34,24 +35,7 @@ class Database
         $this->statement = $this->dbHandler->prepare($sql);
     }
 
-    public function bind($parameter, $value, $type=null)
-    {
-        // Als $type = null dan zoekt de switch case zelf uit
-        // wat het gegevenstype is van de $value;
-        if(is_null($type)){
-            switch($value) {
-                case is_int($value):
-                     $type = PDO::PARAM_INT;
-                break;
-                case is_bool($value):
-                    $type = PDO::PARAM_BOOL;
-                break;
-                case is_null($type):
-                    $type = PDO::PARAM_NULL;
-                break;
-                default:
-                    $type = PDO::PARAM_STR;
-                }
+
         }
         $this->statement->bindValue($parameter, $value, $type);
     }
@@ -78,7 +62,7 @@ class Database
         $this->statement->rowCount();
     }
 
-    public function dbHandler() 
+    public function dbHandler()
     {
         return $this->dbHandler;
     }
