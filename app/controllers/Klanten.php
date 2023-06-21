@@ -56,7 +56,6 @@ class Klanten extends Controller
         $klant = $this->klantModel->getKlantById($klantId);
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            var_dump($_POST);
             $email = $_POST['Email'];
             $tel = $_POST['Mobiel'];
             $postcode = $_POST['Postcode'];
@@ -65,7 +64,8 @@ class Klanten extends Controller
                 $data = [
                     'title' => 'Klant Details' . ' ' . $klant->VolledigNaam,
                     'klant' => $klant,
-                    'telmessage' => $message ?? ''
+                    'telmessage' => $message ?? '',
+                    'message' => NULL
                 ];
                 $this->view('Klant/editKlant', $data);
                 return;
@@ -76,17 +76,22 @@ class Klanten extends Controller
                 $data = [
                     'title' => 'Klant Details' . ' ' . $klant->VolledigNaam,
                     'klant' => $klant,
-                    'telmessage' => $message ?? ''
+                    'telmessage' => $message ?? '',
+                    'message' => NULL
                 ];
                 $this->view('Klant/editKlant', $data);
                 return;
             }
+            //  Checkt of de postocde start met 5271 en of die uit Maaskantje komt
             if (substr($postcode, 0, 4) !== "5271") {
-                $message = "De postcode komt niet uit de regio Maaskantje";
+                $postmessage = "De postcode komt niet uit de regio Maaskantje";
+                $message = "De contactgegevens kunnen niet worden gewijzigd";
                 $data = [
                     'title' => 'Klant Details' . ' ' . $klant->VolledigNaam,
                     'klant' => $klant,
-                    'postmessage' => $message ?? ''
+                    'telmessage' => NULL,
+                    'postmessage' => $postmessage,
+                    'message' => $message
                 ];
                 $this->view('Klant/editKlant', $data);
                 return;
@@ -101,7 +106,6 @@ class Klanten extends Controller
                 header("Refresh:2; url=" . URLROOT . "/Klanten/editKlant");
             }
         }
-        var_dump($klant);
         $data = [
             'title' => 'Klant Details' . ' ' . $klant->VolledigNaam,
             'klant' => $klant,
