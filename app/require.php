@@ -5,4 +5,5 @@
   require_once 'config/config.php';
 
   $init = new Core();
+
 ?>

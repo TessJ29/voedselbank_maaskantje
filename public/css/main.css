@@ -108,12 +108,75 @@ a:active {
   align-items: center;
 }
 
-.input, .buttons {
-  width: 20%;
+.input, .buttons, .telmessage{
+  width: 25%;
   margin: .5rem auto;
   display: flex;
   justify-content: space-between;
 }
+
 label {
   font-size: 16px;
+}
+
+input {
+  width: 70%;
+}
+
+table.filter {
+  width: 10%; 
+  margin: 0% 5%; 
+  float: right;
+}
+
+/* KlantDetail page grid styling */
+.grid-container {
+  display: grid;
+  width: 40%;
+  margin: 3% auto;
+  grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+  border: 1px solid black;
+}
+
+.grid-item {
+  padding-left: 1rem;
+  border: 1px solid black;
+}
+h5 {
+  margin: 3%;
+}
+
+p {
+  margin: 3%;
+}
+.klnt_btn {
+  display: inline-block;
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: blue;
+  color: white;
+  text-decoration: none; /* Remove underline from anchor tags */
+}
+
+.telmessage{
+  display: flex;
+  justify-content: flex-end;
+  height: 5%;
+  width: 50%;
+  margin-top: 0%;
+  margin-bottom: 0%;
+  margin-right:40%;
+  padding: 0;
+}
+div.postmessage {
+  position: static;
+  height: 5%;
+  width: 20%;
+  margin: 0% 0% 0% 45%;
+  padding: 0;
+}
+.txt_message{
+  margin: 0;
 }

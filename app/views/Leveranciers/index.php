@@ -29,7 +29,7 @@
                     <td><?= $leverancier->telefoonnummer; ?></td>
                     <td><?= $leverancier->datumeerstvolgendelevering ?></td>
                     <td> <?= $leverancier->tijdeerstvolgendelevering; ?></td>
-                    <td><a href="<?= URLROOT; ?>/Leveranciers/editLeverancier/<?= $leverancier->Id ?>" class="button"><ion-icon class="edit" name="create-outline" size="large"></ion-icon></a></td>
+                    <td><a href="<?= URLROOT; ?>/Leveranciers/editLeverancier/<?= $leverancier->Id ?>/<?= $leverancier->productId?>" class="button"><ion-icon class="edit" name="create-outline" size="large"></ion-icon></a></td>
                     <td><a href="<?= URLROOT ?>/Leveranciers/deleteLeverancier/<?= $leverancier->Id ?>" class="button"><ion-icon class="delete" name="trash-outline" size="large"></ion-icon></a></td>
                 </tr>
             <?php endforeach; ?>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="button">
-        <button class="addLeverancier"><a href="<?= URLROOT; ?>/Leveranciers/addLeverancier">Leverancier toevoegen</a></button>
+        <button class="addLeverancier"><a href="<?= URLROOT; ?>/Leveranciers/addLeveranciers">Leverancier toevoegen</a></button>
     </div>
 </section>
 

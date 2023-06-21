@@ -1,4 +1,5 @@
 <?php
+
 // De parent controllerclass laad de model en de view
 class Controller
 {
