@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="<?= URLROOT; ?>/css/style.css">
     <link rel="shortcut icon" href="<?= URLROOT; ?>/img/favicon.ico" type="image/x-icon">
-    <title>Bowlingcenter</title>
+    <link rel="stylesheet" href="../../../public/css/main.css">
+    <title>Voedselbank Maaskantje</title>
 </head>
+
 <body>
-    
+
