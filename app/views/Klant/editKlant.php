@@ -35,7 +35,11 @@
         <div class="input">
             <label for="IsVertegenwoordiger">Vertegenwoordiger:</label>
             <select style="width: 60%;" name="IsVertegenwoordiger" id="IsVertegenwoordiger">
-                <option value="<?= $data['klant']->IsVertegenwoordiger ?>"><?php if ($data['klant']->IsVertegenwoordiger == 1) {echo "Ja";} else {echo "Nee";}; ?></option>
+                <option value="<?= $data['klant']->IsVertegenwoordiger ?>"><?php if ($data['klant']->IsVertegenwoordiger == 1) {
+                                                                                echo "Ja";
+                                                                            } else {
+                                                                                echo "Nee";
+                                                                            }; ?></option>
                 <option value="1">Ja</option>
                 <option value="2">Nee</option>
             </select>
@@ -66,7 +70,10 @@
         </div>
         <div class="input">
             <label for="Mobiel">Mobiel:</label>
-            <input type="tel" name="Mobiel" id="Mobiel" value="<?= $data['klant']->Mobiel; ?>" required>
+                <input type="tel" name="Mobiel" id="Mobiel" value="<?= $data['klant']->Mobiel; ?>" required>
+        </div>
+        <div class="telmessage">
+            <h5 class="txt_message"style="float: right;"><?= $data['telmessage'] ?></h5>
         </div>
         <input type="hidden" name="KlantId" value="<?= $data["klant"]->PersoonId ?>">
         <div class="buttons">
@@ -74,10 +81,9 @@
                 <input style="width: 100%;" type="submit" value="Wijzigen">
             </div>
             <div>
-                <button><a href="<?= URLROOT; ?>/Klanten/klantDetails/<?= $data['klant']->PersoonId?>">Terug</a></button>
+                <button><a href="<?= URLROOT; ?>/Klanten/klantDetails/<?= $data['klant']->PersoonId ?>">Terug</a></button>
                 <button><a href="<?= URLROOT; ?>/Homepages/index">Home</a></button>
             </div>
         </div>
-        <h5><?= $data['message'] ?></h5>
     </form>
 </section>
