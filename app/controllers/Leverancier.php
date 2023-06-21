@@ -53,7 +53,7 @@ class Leverancier extends Controller
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $this->LeverancierModel->ProductUpdate($_POST);
-            header("Refresh:2; url=" . URLROOT . "/leverancier/index");
+            header("Refresh:3; url=" . URLROOT . "/leverancier/index");
             echo "<h1>Het product is geüpdatet</h1>";
         } else {
             $row = $this->LeverancierModel->getProductById($Id);
