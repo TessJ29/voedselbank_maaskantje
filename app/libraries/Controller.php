@@ -1,25 +1,23 @@
 <?php
-// De parent controllerclass laad de model en view
+
+// De parent controllerclass laad de model en de view
 class Controller
 {
-    public function Model($model)
-    {
-        // Pad naar de modelclass bestand opgeven
-        require_once '../app/models/' . $model . '.php';
-
-        // Nieuw object van de opgegeven model
-        return new $model();
-    }
-
-    public function View($view, $data = [])
-    {
-        if(file_exists('../app/views/' . $view . '.php'))
-        {
-            require_once('../app/views/' . $view . '.php');
-        } else {
-            die('view does not exist');
-        }
-    }
+   public function model($model)
+   {
+     // Pad naar de modelclass bestand opgeven
+       require_once APPROOT . '/models/' . $model . '.php';
+     // Nieuwe object van de opgegeven model
+       return new $model();
+   }
+   public function view($view, $data = [])
+   {
+    
+      if(file_exists(APPROOT . '/views/' . $view . '.php'))
+      {
+          require_once(APPROOT . '/views/' . $view . '.php');
+      } else {
+        die('View bestaat niet');
+      }
+   }
 }
-
-?>

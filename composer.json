@@ -1,0 +1,15 @@
+{
+    "require-dev": {
+        "phpunit/phpunit": "dev-main"
+    },
+    "autoload" : {
+        "classmap": [
+            "app/controllers",
+            "app/models",
+            "app/libraries"
+        ],
+        "files": [
+            "app/config/config.php"
+        ]
+    }
+}

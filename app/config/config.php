@@ -1,14 +1,15 @@
 <?php
-    // Database constanten
-    define('DB_HOST', 'localhost');
-    define('DB_USER', 'root');
-    define('DB_PASS', '');
-    define('DB_NAME', 'voedselbank');
+// Database constanten
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'Voedselbank');
 
-    // Pad naar app map
-    define('APPROOT', dirname(dirname(__FILE__)));
+// Het pad naar de app map
+define('APPROOT', dirname(dirname(__FILE__)));
 
-    define('URLROOT', 'http://www.voedselbank-maaskantje.local');
+// De URL van het de site
+define('URLROOT', 'http://www.examenallergie.nl');
 
-    define('SITENAME', 'voedselbank maaskantje');
-// 
+// Naam van de site
+define('SITENAME', 'Voedselbank');
