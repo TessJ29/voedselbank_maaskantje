@@ -2,17 +2,17 @@
 
 class Leverancier extends Controller
 {
-    private $LeverancierModel;
+    private $LeveranciersModel;
 
     public function __construct()
     {
-        $this->LeverancierModel = $this->model('LeveranciersModel');
+        $this->LeveranciersModel = $this->model('LeveranciersModel');
     }
 
     public function pdetails($Id = null)
     {
-        $Leverancier = $this->LeverancierModel->getLeverancierById($Id);
-        $Products = $this->LeverancierModel->getLeverancierProducts($Id);
+        $Leverancier = $this->LeveranciersModel->getLeverancierById($Id);
+        $Products = $this->LeveranciersModel->getLeverancierProducts($Id);
 
         $data = [
             'title' => 'Overzicht Product',
@@ -26,7 +26,7 @@ class Leverancier extends Controller
 
     public function index()
     {
-        $Leveranciers = $this->LeverancierModel->getLeveranciers();
+        $Leveranciers = $this->LeveranciersModel->getLeveranciers();
 
         $rows = '';
         foreach ($Leveranciers as $value) {
@@ -52,11 +52,11 @@ class Leverancier extends Controller
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $this->LeverancierModel->ProductUpdate($_POST);
+            $this->LeveranciersModel->ProductUpdate($_POST);
             header("Refresh:3; url=" . URLROOT . "/leverancier/index");
             echo "<h1>Het product is geüpdatet</h1>";
         } else {
-            $row = $this->LeverancierModel->getProductById($Id);
+            $row = $this->LeveranciersModel->getProductById($Id);
             $data = [
                 'title' => '<h1>Update Houdbaarheidsdatum</h1>',
                 'row' => $row

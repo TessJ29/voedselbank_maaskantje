@@ -277,29 +277,65 @@ VALUES
 
 -- maken tabel Product
 DROP TABLE IF EXISTS Product;
-CREATE TABLE Product (
-  id int(6) UNSIGNED NOT NULL AUTO_INCREMENT,
-  productnaam varchar(50) NOT NULL,
-  productcategorieId int(6) UNSIGNED NOT NULL,
-  EAN int(13) NOT NULL,
-  vooraad int(6) NOT NULL,
-  isActive bit NOT NULL DEFAULT 1,
-  comment varchar(250) NULL,
-  createdAt datetime(6) NOT NULL,
-  updatedAt datetime(6) NOT NULL,
-  CONSTRAINT PK_Product_id PRIMARY KEY CLUSTERED (id),
-  CONSTRAINT FK_Product_ProductcategorieId FOREIGN KEY (ProductcategorieId) REFERENCES Productcategorie (id)
-)ENGINE=InnoDB;
+create table Product(
+ Id int not null auto_increment primary key
+,ProductCategorieId int not null
+,Naam varchar(100) not null
+,SoortAllergie varchar(100) null
+,Barcode varchar(100) not null
+,Houdbaarheidsdatum date not null
+,Omschrijving varchar(250) not null
+,Status varchar(100) not null
+,IsActive tinyint not null
+,Opmerking varchar(255) null
+,DatumAangemaakt datetime not null
+,DatumGewijzigd datetime not null
+)engine = innodb;
 
 -- Toevoegen data in Product tabel
-INSERT INTO Product (productnaam, productcategorieId, EAN, vooraad, isActive, comment, createdAt, updatedAt)
-VALUES
-    ('Appel', 1, 123456789, 10, 1, NULL, SYSDATE(6), SYSDATE(6)),
-    ('Volkoren brood', 2, 234567890, 15, 1, NULL, SYSDATE(6), SYSDATE(6)),
-    ('Melk', 1, 345678901, 20, 1, NULL, SYSDATE(6), SYSDATE(6)),
-    ('Kaas',1, 123498765, 14,1, NULL, SYSDATE(6), SYSDATE(6)),
-    ('Cola',2, 643920428,11,1,NULL, SYSDATE(6), SYSDATE(6)),
-    ('Cassis',2,123843202,13,1,NULL, SYSDATE(6), SYSDATE(6));
+INSERT INTO `Product` (
+    `Id`,
+    `ProductCategorieId`,
+    `Naam`,
+    `SoortAllergie`,
+    `Barcode`,
+    `Houdbaarheidsdatum`,
+    `Omschrijving`,
+    `Status`,
+    `IsActive`,
+    `Opmerking`,
+    `DatumAangemaakt`,
+    `DatumGewijzigd`)
+    VALUES
+	 (NULL, 1, 'Aardappel', NULL, 8719587321239, '2023-06-12', 'Kruimige aardappel', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 1, 'Ui', NULL, 8719437321335, '2023-05-02', 'Gele Ui', 'NietOpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 1, 'Appel', NULL, 8719486321332, '2023-09-16', 'Granny Smith', 'NietLeverbaar', 1, NULL, SYSDATE(), SYSDATE())
+	,(NULL, 1, 'Banaan', 'Banaan', 8719484321336, '2023-04-12', 'Biologische Banaan ', 'OverHoudbaarheidsDatum', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 2, 'Kaas', 'Lactose', 8719487421338, '2023-07-19', 'Jonge Kaas', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 2, 'Rosbief', NULL, 8719487421331, '2023-08-23', 'Rundvlees', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 3, 'Melk', NULL, 8719447321332, '2023-08-23', 'Halfvolle melk', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 3, 'Margarine', NULL, 8719486321336,'2023-07-02', 'Plantaardige boter', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 3, 'Ei', 'Eier', 8719487421334, '2023-02-04', 'Scharrelei', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 4, 'Brood', 'Gluten', 8719487721337, '2023-05-17', 'Volkoren brood', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 4, 'Gevulde Koek', 'Amandel', 8719483321333, '2023-05-04', 'Banketbakkers', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 5, 'Fristi', 'Lactose', 8719487121331, '2023-05-28', 'Frisdrank', 'NietOpVoorraad', 1, NULL, SYSDATE(), SYSDATE())  
+    ,(NULL, 5,'Appelsap', NULL, 8719487521335, '2023-05-19', 'vruchtensap', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 5, 'Koffie', 'Caffeïne', 8719487381338, '2023-05-23', 'Arabica koffie', 'OverHoudbaarheidsDatum', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 5, 'Thee', NULL, 8719487329339, '2023-04-02', 'Ceylon thee', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 6, 'Pasta', 'Gluten', 8719487321334, '2023-05-16', 'Macaroni', 'NietLeverbaar', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 6, 'Rijst', NULL, 8719487331332, '2023-05-25', 'Basmati', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 6, 'Knorr Nasi Mix', NULL, 8719487351354, '2023-05-13', 'Nasi', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 7, 'Tomatensoep', NULL, 8719487371337, '2023-05-23', 'Romige tomatensoep', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 7, 'Tomatensaus', NULL, 8719487341334, '2023-05-21', 'Pizza saus', 'NietOpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 7, 'Peterselie', NULL, 8719487321636, '2023-05-31', 'Verse kruidenpot', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 8, 'Olie', NULL, 8719487327337, '2023-05-27', 'Olijfolie', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 8, 'Mars', NULL, 8719487324334, '2023-05-11', 'Snoep', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 8, 'Biscuit', NULL, 8719487311331, '2023-05-07', 'San Francisco biscuit', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 8, 'Paprika Chips', NULL, 8719487321839, '2023-05-22', 'Ribbelchips paprika', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 8, 'Chocolade reep', 'Cacoa', 8719487321533, '2023-05-21', 'Tony Chocolonely', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 9, 'Luier', NULL, 8719487321436, '2023-05-30', 'Baby luier', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 9, 'Scheerschuim', NULL, 8719487323338, '2023-02-22', 'Verzorgende scheerschuim', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE())
+    ,(NULL, 9, 'Toiletpapier', NULL, 8719487321535, '2023-01-02', 'rollen 3 laags toiletpapier', 'OpVoorraad', 1, NULL, SYSDATE(), SYSDATE());
 
 -- Maken Pakket tabel
 DROP TABLE IF EXISTS Pakket;
