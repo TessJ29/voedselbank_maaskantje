@@ -278,7 +278,7 @@ VALUES
 -- maken tabel Product
 DROP TABLE IF EXISTS Product;
 create table Product(
- Id int not null auto_increment primary key
+ Id int(6) UNSIGNED not null auto_increment
 ,ProductCategorieId int not null
 ,Naam varchar(100) not null
 ,SoortAllergie varchar(100) null
