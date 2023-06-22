@@ -138,28 +138,30 @@ VALUES
     ('Geen vis', 1, NULL, SYSDATE(6), SYSDATE(6));
 
 -- maken allergie tabel
-DROP TABLE IF EXISTS Allergie;
-CREATE TABLE Allergie (
-  `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `klantId` int(6) UNSIGNED NOT NULL,
-  `klantWensId` int(6) UNSIGNED NOT NULL,
-  `isActive` bit NOT NULL DEFAULT 1,
-  `comment` varchar(250) NULL,
-  `createdAt` datetime(6) NOT NULL,
-  `updatedAt` datetime(6) NOT NULL,
-  CONSTRAINT PK_Allergie_Id PRIMARY KEY CLUSTERED (id),
-  CONSTRAINT FK_Allergie_klantId FOREIGN KEY (klantId) REFERENCES Klant(id),
-  CONSTRAINT FK_Allergie_klantWensId FOREIGN KEY (klantWensId) REFERENCES KlantWens(id)
-)ENGINE=InnoDB;
+DROP TABLE IF EXISTS `allergie`;
+CREATE TABLE IF NOT EXISTS `allergie` (
+  `Id` int(6) NOT NULL,
+  `Naam` varchar(255) DEFAULT NULL,
+  `Omschrijving` varchar(255) DEFAULT NULL,
+  `AnafylactischRisico` varchar(50) DEFAULT NULL,
+  `isActive` int(1) DEFAULT NULL,
+  `opmerking` varchar(255) DEFAULT NULL,
+  `datumaangemaakt` datetime DEFAULT NULL,
+  `datugewijzigd` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- toevoegen data in allergie tabel
-INSERT INTO Allergie (klantId, klantWensId, isActive, comment, createdAt, updatedAt)
-VALUES 
-    (1,1,1,NULL, SYSDATE(6), SYSDATE(6)),
-    (2,2,1,NULL, SYSDATE(6), SYSDATE(6)),
-    (3,3,1,NULL, SYSDATE(6), SYSDATE(6)),
-    (4,4,1,NULL, SYSDATE(6), SYSDATE(6)),
-    (5,5,1,NULL, SYSDATE(6), SYSDATE(6));
+--
+-- Gegevens worden geëxporteerd voor tabel `allergie`
+--
+
+INSERT INTO `allergie` (`Id`, `Naam`, `Omschrijving`, `AnafylactischRisico`, `isActive`, `opmerking`, `datumaangemaakt`, `datugewijzigd`) VALUES
+(1, 'Gluten', 'Allergisch voor gluten', 'zeerlaag', NULL, NULL, NULL, NULL),
+(2, 'Pindas', 'Allergisch voor pindas', 'Hoog', NULL, NULL, NULL, NULL),
+(3, 'Schaaldieren', 'Allergisch voor schaaldieren', 'RedelijkHoog', NULL, NULL, NULL, NULL),
+(4, 'Hazelnoten', 'Allergisch voor hazelnoten', 'laag', NULL, NULL, NULL, NULL),
+(5, 'Lactose', 'Allergisch voor lactose', 'Zeerlaag', NULL, NULL, NULL, NULL),
+(6, 'Soja', 'Allergisch voor soja', 'Zeerlaag', NULL, NULL, NULL, NULL);
 
 -- maken rol tabel
 DROP TABLE IF EXISTS Rol;
@@ -290,6 +292,7 @@ create table Product(
 ,Opmerking varchar(255) null
 ,DatumAangemaakt datetime not null
 ,DatumGewijzigd datetime not null
+,CONSTRAINT PK_Product_id  primary key (Id)
 )engine = innodb;
 
 -- Toevoegen data in Product tabel
@@ -371,8 +374,8 @@ CREATE TABLE ProductPerPakket (
   createdAt datetime(6) NOT NULL,
   updatedAt datetime(6) NOT NULL,
   CONSTRAINT PK_ProductPerPakket_Id PRIMARY KEY CLUSTERED (id),
-  CONSTRAINT FK_ProductPerPakket_pakketId FOREIGN KEY (pakketid) REFERENCES Pakket(id),
-  CONSTRAINT FK_ProductPerPakket_productId FOREIGN KEY (productId) REFERENCES Product(id)
+  CONSTRAINT FK_ProductPerPakket_pakketId FOREIGN KEY (pakketId) REFERENCES Pakket(Id),
+  CONSTRAINT FK_ProductPerPakket_productId FOREIGN KEY (productId) REFERENCES Product(Id)
 )ENGINE=InnoDB;
 
 -- Toevoegen data in ProductPerPaket tabel
@@ -601,5 +604,42 @@ VALUES
     ,(NULL, 7, 12, 1, '', SYSDATE(), SYSDATE())
     ,(NULL, 8, 13, 1, '', SYSDATE(), SYSDATE());
 
+
+DROP TABLE IF EXISTS `allergieperpersoon`;
+CREATE TABLE IF NOT EXISTS `allergieperpersoon` (
+  `Id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `PersoonId` int(6) DEFAULT NULL,
+  `AllergieId` int(6) DEFAULT NULL,
+  `isActive` int(1) DEFAULT NULL,
+  `opmerking` varchar(255) DEFAULT NULL,
+  `datumaangemaakt` datetime DEFAULT NULL,
+  `datugewijzigd` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `PersoonId` (`PersoonId`),
+  KEY `AllergieId` (`AllergieId`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `allergieperpersoon`
+--
+
+INSERT INTO `allergieperpersoon` (`Id`, `PersoonId`, `AllergieId`, `isActive`, `opmerking`, `datumaangemaakt`, `datugewijzigd`) VALUES
+(1, 4, 3, NULL, NULL, NULL, NULL),
+(2, 5, 2, NULL, NULL, NULL, NULL),
+(3, 6, 1, NULL, NULL, NULL, NULL),
+(4, 7, 4, NULL, NULL, NULL, NULL),
+(5, 8, 3, NULL, NULL, NULL, NULL),
+(6, 9, 2, NULL, NULL, NULL, NULL),
+(7, 10, 5, NULL, NULL, NULL, NULL),
+(8, 12, 2, NULL, NULL, NULL, NULL),
+(9, 13, 4, NULL, NULL, NULL, NULL),
+(10, 14, 2, NULL, NULL, NULL, NULL),
+(11, 15, 3, NULL, NULL, NULL, NULL),
+(12, 16, 5, NULL, NULL, NULL, NULL),
+(13, 17, 1, NULL, NULL, NULL, NULL),
+(14, 17, 2, NULL, NULL, NULL, NULL),
+(15, 18, 1, NULL, NULL, NULL, NULL),
+(16, 19, 1, NULL, NULL, NULL, NULL),
+(17, 11, 1, NULL, NULL, '2023-06-21 12:14:58', '2023-06-21 12:14:58');
 
 
