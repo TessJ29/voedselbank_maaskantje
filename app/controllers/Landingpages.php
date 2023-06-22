@@ -27,10 +27,3 @@ class Landingpages extends Controller
     }
 }
 
-        $data = [
-            'title' => "<h1 style='text-align: center;'>Voedselbank</h1>",
-        ];
-        $this->view('landingpages/index', $data);
-    }
-}
-

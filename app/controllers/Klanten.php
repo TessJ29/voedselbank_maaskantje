@@ -43,7 +43,7 @@ class Klanten extends Controller
 
     public function klantDetails($klantId)
     {
-        $klant = $this->klantModel->getKlantById($klantId);
+        $klant = $this->klantModel->getKlantenById($klantId);
         $data = [
             'title' => 'Klant Details' . ' ' . $klant->VolledigNaam,
             'klant' => $klant,
@@ -53,7 +53,7 @@ class Klanten extends Controller
     }
     public function editKlant($klantId)
     {
-        $klant = $this->klantModel->getKlantById($klantId);
+        $klant = $this->klantModel->getKlantenById($klantId);
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $email = $_POST['Email'];

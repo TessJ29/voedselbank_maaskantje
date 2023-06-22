@@ -19,7 +19,7 @@
                             </select>
                         </td>
                         <td>
-                            <input type="submit" value="Toon Klanten">
+                            <input style="width: 100%;" type="submit" value="Toon Klanten">
                         </td>
                     </tr>
                 </tbody>
@@ -46,7 +46,7 @@
                         <td><?= $klant->Mobiel; ?></td>
                         <td><?= $klant->Adres; ?></td>
                         <td><?= $klant->Woonplaats ?></td>
-                        <td><a href="<?= URLROOT; ?>/Klant/editKlant/<?= $klant->PersoonId ?>" class="button"><ion-icon name="journal-outline"></ion-icon></a></td>
+                        <td><a href="<?= URLROOT; ?>/Klanten/klantDetails/<?= $klant->PersoonId ?>" class="button"><ion-icon name="journal-outline"></ion-icon></a></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

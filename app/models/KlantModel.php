@@ -62,7 +62,7 @@ class KlantModel
         }
     }
 
-    public function getKlantById($klantId)
+    public function getKlantenById($klantId)
     {
         $this->db->query("SELECT
         Persoon.Id AS PersoonId,
@@ -127,7 +127,7 @@ class KlantModel
         $this->db->bind(':Email', $post['Email']);
         $this->db->bind(':Mobiel', $post['Mobiel']);
         $this->db->execute();
-      
+    }
 //       Dag 2
     public function getKlanten()
     {
