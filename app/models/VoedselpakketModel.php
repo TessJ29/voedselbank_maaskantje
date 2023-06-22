@@ -1,134 +1,239 @@
 <?php
-//om databasebewerkingen uit te voeren
-class VoedselpakketModel
+
+class VoedselPakketModel
 {
-    // Properties, fields
+
     private $db;
-    public $helper;
 
     public function __construct()
     {
         $this->db = new Database();
     }
-    // genereert een SQL-query om reserveringen op te halen
-    public function getVoedselpakketten()
+
+    public function VoedselPakkettenByEetwens($eetwens)
     {
-        $sql = "SELECT  persoon.Voornaam, 
-                        gezin.Omschrijving, 
-                        gezin.AantalVolwassenen, 
-                        gezin.AantalKinderen, 
-                        gezin.AantalBabys, 
-                        persoon.IsVertegenwoordiger, 
-                        eetwens.Naam,
-                        gezin.id
-                FROM gezin
-                INNER JOIN Persoon persoon ON gezin.id = persoon.GezinId
-                INNER JOIN EetwensPerGezin eetwensPerGezin ON gezin.id = eetwensPerGezin.GezinId
-                INNER JOIN Eetwens eetwens ON eetwensPerGezin.EetwensId = eetwens.id;";
-        $this->db->query($sql);
+        // error catcher
+        try {
+            $this->db->query('SELECT 
+                                gezin.Id as id,
+                                gezin.Naam,
+                                gezin.Omschrijving ,
+                                gezin.AantalVolwassenen,
+                                gezin.AantalKinderen,
+                                gezin.AantalBabys,
+                                persoon.Voornaam,
+                                persoon.Tussenvoegsel,
+                                persoon.Achternaam,
+                                eetwens.naam as eetwens
+                                
+                            from gezin
+                            inner join persoon
+                            on gezin.Id = persoon.GezinId
+                            inner join eetwenspergezin 
+                            on gezin.Id = eetwenspergezin.GezinId
+                            inner join eetwens
+                            on eetwens.Id = eetwenspergezin.EetwensId
+                            where (persoon.IsVertegenwoordiger = 1) and (eetwens.Naam = :Eetwens)
+                            ');
+            $this->db->bind(':Eetwens', $eetwens, PDO::PARAM_STR);
+
+            return $this->db->resultSet();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    public function VoedselPakkettenById($id)
+    {
+
+        // error catcher
+        try {
+            $this->db->query('SELECT DISTINCT
+                                gezin.Id as id,
+                                gezin.Naam ,
+                                gezin.Omschrijving ,
+                                gezin.TotaalAantalPersonen ,
+                                voedselpakket.PakketNummer ,
+                                voedselpakket.DatumSamenstelling ,
+                                voedselpakket.DatumUitgifte ,
+                                voedselpakket.Status,
+        
+                                voedselpakket.Id as pakketid  
+                                
+                            from gezin 
+                            inner join voedselpakket
+                            on gezin.Id = voedselpakket.GezinId
+                            inner join productpervoedselpakket
+                            on voedselpakket.Id = productpervoedselpakket.VoedselpakketId
+                            where (gezin.Id = :Id)
+                            ');
+            $this->db->bind(':Id', $id, PDO::PARAM_INT);
+
+            return $this->db->resultSet();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    public function VoedselPakketten()
+    {
+        // error catcher
+        try {
+            $this->db->query('SELECT 
+                                gezin.Id as id,
+                                gezin.Naam as naam,
+                                gezin.Omschrijving as omschrijving,
+                                gezin.AantalVolwassenen as volwassenen,
+                                gezin.AantalKinderen as kinderen,
+                                gezin.AantalBabys as babys,
+                                persoon.Voornaam as voornaam,
+                                persoon.Tussenvoegsel as tussenvoegsel,
+                                persoon.Achternaam as achternaam
+                                
+                            from gezin
+                            inner join persoon
+                            on gezin.Id = persoon.GezinId
+                            where persoon.IsVertegenwoordiger = 1
+                            ');
+            return $this->db->resultSet();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    public function VoedselPakketById($id)
+    {
+
+        // error catcher
+        try {
+            $this->db->query('SELECT 
+                            Status as status,
+                            Id as id,
+                            GezinId as gezinid,
+                            isActief as isactief
+                            from voedselpakket
+                            where (Id = :Id)
+                            ');
+            $this->db->bind(':Id', $id, PDO::PARAM_INT);
+
+            return $this->db->single();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    public function updateStatus($data)
+    {
+        $datum = '';
+        if ($data['status'] == "Uitgereikt") {
+            $datum = date('Y-m-d');
+        } else {
+            $datum = null;
+        }
+
+        $this->db->query("UPDATE voedselpakket
+                        set     Status = :status,
+                                DatumUitgifte = :datumuitgifte,
+                                DatumGewijzigd = :datumgewijzigd
+                        where Id = :id;");
+        $this->db->bind('id', $data['id'], PDO::PARAM_INT);
+        $this->db->bind(':status', $data['status'], PDO::PARAM_STR);
+        $this->db->bind(':datumuitgifte', $datum, PDO::PARAM_STR);
+        $this->db->bind(':datumgewijzigd', date('Y-m-d H:i:s'), PDO::PARAM_STR);
+
+
+        return $this->db->execute();
+    }
+}
+
+?>
+
+
+<!-- 
+
+ublic function viewFamilyDetails($id)
+    {
+
+        $this->db->query('  SELECT  Gezin.Naam, 
+                                    Gezin.Omschrijving, 
+                                    ProductPerVoedselpakket.AantalProductEenheden
+                            FROM Gezin
+                            INNER JOIN Voedselpakket ON Gezin.id = Voedselpakket.GezinId
+                            INNER JOIN ProductPerVoedselpakket ON Voedselpakket.id = ProductPerVoedselpakket.VoedselpakketId;');
+
+        $this->db->bind(':id', $id);
         $result = $this->db->resultSet();
         return $result;
     }
 
 
-    // public function getVoedselpakketUpdate()
-    // {
-    //     $this->db->query(" SELECT Persoon.Voornaam, ProductPerVoedselpakket.AantalProductEenheden, Product.Omschrijving
-    //     FROM Persoon
-    //     INNER JOIN Gezin ON Persoon.GezinId = Gezin.id
-    //     INNER JOIN Voedselpakket ON Voedselpakket.GezinId = Gezin.id
-    //     INNER JOIN ProductPerVoedselpakket ON ProductPerVoedselpakket.VoedselpakketId = Voedselpakket.id
-    //     INNER JOIN Product ON Product.id = ProductPerVoedselpakket.ProductId;
-    //     ");
 
-        
-
-
-        public function getVoedselpakketByEetwens($eetwens)
+    public function getVoedselPakkettenByEetwens($eetwens)
     {
+        // error catcher
         try {
-            $this->db->query("SELECT
-                                Persoon.Id AS PersoonId,
-                                Persoon.Voornaam,
-                                ProductPerVoedselpakket.AantalProductEenheden,
-                                Product.Omschrijving,
-                            FROM Persoon
-                            INNER JOIN Gezin ON Gezin.Id = Persoon.GezinId
-                            INNER JOIN Voedselpakket ON Voedselpakket.GezinId = Gezin.id
-                            INNER JOIN ProductPerVoedselpakket ON ProductPerVoedselpakket.VoedselpakketId = Voedselpakket.id
-                            INNER JOIN Product ON Product.id = ProductPerVoedselpakket.ProductId;
-                            WHERE Eetwens.eetwens = :eetwens");
+            $this->db->query('SELECT 
+                                gezin.Id as id,
+                                gezin.Naam as naam,
+                                gezin.Omschrijving as omschrijving,
+                                gezin.AantalVolwassenen as volwassenen,
+                                gezin.AantalKinderen as kinderen,
+                                gezin.AantalBabys as babys,
+                                persoon.Voornaam as voornaam,
+                                persoon.Tussenvoegsel as tussenvoegsel,
+                                persoon.Achternaam as achternaam,
+                                eetwens.naam as eetwens
+                                
+                            from gezin
+                            inner join persoon 
+                            on gezin.Id = persoon.GezinId
+                            inner join eetwenspergezin 
+                            on gezin.Id = eetwenspergezin.GezinId
+                            inner join eetwens
+                            on eetwens.Id = eetwenspergezin.EetwensId
+                            where (persoon.IsVertegenwoordiger = 1) and (eetwens.Naam = :Eetwens)
+                            ');
+            $this->db->bind(':Eetwens', $eetwens, PDO::PARAM_STR);
 
-            $this->db->bind(':eetwens', $eetwens);
-            $result = $this->db->resultSet();
-            return $result;
-        } catch (\PDOException $e) {
-            $e->getMessage();
+            return $this->db->resultSet();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    public function VoedselPakkettenById($id)
+    {
+        // error catcher
+        try {
+            $this->db->query('SELECT DISTINCT
+                                gezin.Id as id,
+                                gezin.Naam as naam,
+                                gezin.Omschrijving as omschrijving,
+                                gezin.TotaalAantalPersonen as totaalaantalpersonen,
+                                voedselpakket.PakketNummer as pakketnummer,
+                                voedselpakket.DatumSamenstelling as datumsamengesteld,
+                                voedselpakket.DatumUitgifte as datumuitgifte,
+                                voedselpakket.Status as status,
+                                productpervoedselpakket.AantalProductEenheden as aantalproducteenheden
+                            from gezin 
+                            inner join voedselpakket 
+                            on gezin.Id = voedselpakket.GezinId
+                            inner join productpervoedselpakket 
+                            on voedselpakket.Id = productpervoedselpakket.VoedselpakketId
+                            where (gezin.Id = :Id)
+                            ');
+            $this->db->bind(':Id', $id, PDO::PARAM_INT);
+
+            return $this->db->resultSet();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
         }
     }
 
 
+   
 
 
 
-
-    // $this->db->query("SELECT  persoon.Voornaam, 
-    //                     gezin.Omschrijving, 
-    //                     gezin.AantalVolwassenen, 
-    //                     gezin.AantalKinderen, 
-    //                     gezin.AantalBabys, 
-    //                     persoon.IsVertegenwoordiger, 
-    //                     eetwens.Naam,
-    //                     gezin.id
-    //             FROM gezin
-    //             INNER JOIN Persoon persoon ON gezin.id = persoon.GezinId
-    //             INNER JOIN EetwensPerGezin eetwensPerGezin ON gezin.id = eetwensPerGezin.GezinId
-    //             INNER JOIN Eetwens eetwens ON eetwensPerGezin.EetwensId = eetwens.id;");
-
-
-
-
-    // // Maakt een SQL-query om het optiepakket uit de database te halen.
-    // public function ($id)
-    // {
-    //     $this->db->query("  SELECT
-    //                             Gezin.Naam AS naam,
-    //                             Gezin.Omschrijving AS Omschrijving,
-    //                             Gezin.TotaalAantalPersonen AS TotaalAantalPersonen,
-    //                             Voedselpakket.PakketNummer AS PakketNummer,
-    //                             Voedselpakket.DatumSamenstelling AS DatumSamenstelling,
-    //                             Voedselpakket.DatumUitgifte AS DatumUitgifte,
-    //                             Voedselpakket.Status AS Status,
-    //                             SUM(ProductPerVoedselpakket.AantalProductEenheden) AS AantalProductEenheden
-    //                         FROM
-    //                             Gezin
-    //                         JOIN
-    //                             Voedselpakket ON Gezin.id = Voedselpakket.GezinId
-    //                         JOIN
-    //                             ProductPerVoedselpakket ON Voedselpakket.id = ProductPerVoedselpakket.VoedselpakketId
-
-    //     ");
-    //     $this->db->bind(':Id', $id, PDO::PARAM_INT);
-    //     return $this->db->single();
-
-    //     $result = $this->db->resultSet();
-
-    //     return $result;
-    // }
-
-
-
-
-
-
-
-    // private function GetPakketOptieId($pakketOptieNaam)
-    // {
-    //     // var_dump($pakketOptieNaam);
-    //     //exit();
-    //     $sql = ("SELECT Id FROM Eetwens WHERE Naam = :naam");
-    //     $this->db->query($sql);
-    //     $this->db->bind(':naam', $pakketOptieNaam,  PDO::PARAM_STR);
-    //     return $this->db->single();
-    // }
-}
+    p
+} -->
