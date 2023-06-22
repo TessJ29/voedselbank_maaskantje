@@ -1,4 +1,3 @@
-
 <div stylee="margin-top: 5%;">
     <h1><?= $data['title']; ?></h1>
 </div>
@@ -38,29 +37,37 @@
                     <th>Voedselpakket Details </th>
                 </tr>
             </thead>
+
             <tbody>
-                <?php foreach ($data['eetwens'] as $voedselpakket) : ?>
-                    <tr>
-                        <td><?= $voedselpakket->Voornaam; ?></td>
-                        <td><?= $voedselpakket->Omschrijving; ?></td>
-                        <td><?= $voedselpakket->AantalVolwassenen; ?></td>
-                        <td><?= $voedselpakket->AantalKinderen; ?></td>
-                        <td><?= $voedselpakket->AantalBabys; ?></td>
-                        <td><?= $voedselpakket->IsVertegenwoordiger ?></td>
-                        <td><a href="<?= URLROOT; ?>/Voedselpakket/editVoedselpakket/<?= $voedselpakket->PersoonId ?>" class="button"><ion-icon name="journal-outline"></ion-icon></a></td>
-                    </tr>
-                <?php endforeach; ?>
+                <?php if (is_array($data['eetwens']) || is_object($data['eetwens'])) : ?>
+                    <?php foreach ($data['eetwens'] as $voedselpakket) : ?>
+                        <tr>
+                            <td><?= $voedselpakket->Voornaam; ?></td>
+                            <td><?= $voedselpakket->Omschrijving; ?></td>
+                            <td><?= $voedselpakket->AantalVolwassenen; ?></td>
+                            <td><?= $voedselpakket->AantalKinderen; ?></td>
+                            <td><?= $voedselpakket->AantalBabys; ?></td>
+                            <td><?= $voedselpakket->IsVertegenwoordiger ?></td>
+                            <td><a href="<?= URLROOT; ?>/voedselpakket/editVoedselpakket/<?= $voedselpakket->id ?>" class="button"><img src='\img\kutu.png' alt='klaem'></a></td>
+
+
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
+
+
+
         </table>
         <div class="message">
             <?php if ($data['message'] == NULL) : ?>
                 <h4><?= $data['message']; ?></h4>
             <?php else : ?>
-                <h4 style="width: 88%; padding: 1rem; color: black; background-color: #fad48e; border-radius: 5px; font-size: 24px; text-align: center;"><?= $data['message']; ?></h4>
+                <h4 ><?= $data['message']; ?></h4>
             <?php endif; ?>
         </div>
 
         <div class="button">
-            <button style="background-color: blue; padding: 1rem; margin: 0% 5% 5% 0%; float: right;"><a href="<?= URLROOT; ?>/Homepages/index" style="color: white;">Home</a></button>
+            <button ><a href="<?= URLROOT; ?>/Homepages/index" >Home</a></button>
         </div>
 </section>

@@ -3,7 +3,11 @@
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
+<<<<<<< Updated upstream
 define('DB_NAME', 'Voedselbank');
+=======
+define('DB_NAME', 'voedselbankfinn');
+>>>>>>> Stashed changes
 
 // Het pad naar de app map
 define('APPROOT', dirname(dirname(__FILE__)));
