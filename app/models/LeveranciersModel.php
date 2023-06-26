@@ -30,7 +30,7 @@ class LeveranciersModel
         $this->db->query('SELECT Leverancier.Naam,
                                  Leverancier.ContactPersoon,
                                  Contact.Email,
-                                 Contact.Mobiel,
+                                 Contact.Mobiel,    
                                  Leverancier.LeverancierNummer,
                                  Leverancier.LeverancierType,
                                  Leverancier.Id
@@ -51,7 +51,7 @@ class LeveranciersModel
                              Product.Barcode,
                              Product.Naam as Pnaam,
                              Product.Houdbaarheidsdatum,
-                             Product.Id as ProductId, -- Add this line
+                             Product.Id as ProductId,
                              Leverancier.Id as leverId
                         from Leverancier
                         inner join ProductPerLeverancier on Leverancier.Id = ProductPerLeverancier.LeverancierId
@@ -61,9 +61,6 @@ class LeveranciersModel
         $this->db->bind(':Id', $Id, PDO::PARAM_INT);
         return $this->db->single();
     }
-
-
-
 
     public function getLeverancierProducts($Id)
     {
@@ -84,6 +81,23 @@ class LeveranciersModel
         return $this->db->resultSet();
     }
 
+    public function getLeveranciersByType($leverancierType)
+    {
+        $this->db->query('SELECT Leverancier.Naam,
+                             Leverancier.ContactPersoon,
+                             Contact.Email,
+                             Contact.Mobiel,
+                             Leverancier.LeverancierNummer,
+                             Leverancier.LeverancierType,
+                             Leverancier.Id as leverId
+                      from Leverancier
+                      inner join ContactPerLeverancier on Leverancier.Id = ContactPerLeverancier.LeverancierId
+                      inner join Contact on ContactPerLeverancier.ContactId = Contact.Id
+                      WHERE Leverancier.LeverancierType = :leverancierType;');
+        $this->db->bind(':leverancierType', $leverancierType, PDO::PARAM_STR);
+        $result = $this->db->resultSet();
+        return $result;
+    }
 
     public function ProductUpdate($post)
     {
